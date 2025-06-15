@@ -106,8 +106,8 @@ describe("LikeRepositoryPostgres", () => {
       const countLikes = await likeRepositoryPostgres.countCommentLikes([commentId, commentId2]);
 
       expect(countLikes).toHaveLength(2)
-      expect(countLikes[0].count).toEqual({ comment: commentId, count: 2 })
-      expect(countLikes[1].count).toEqual({ comment: commentId2, count: 1 })
+      expect(countLikes[0].count).toEqual(2)
+      expect(countLikes[1].count).toEqual(1)
     });
   });
 });
