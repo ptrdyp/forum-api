@@ -29,12 +29,13 @@ class GetThreadDetailUseCase {
           username: comment.username,
           date: comment.date instanceof Date ? comment.date.toISOString() : comment.date,
           content: comment.is_delete ? "**komentar telah dihapus**" : comment.content,
+          likeCount: comment.likeCount,
         };
 
         if (mappedReplies.length > 0) {
           commentDetail.replies = mappedReplies;
         } else {
-          commentDetail.replies = []; 
+          commentDetail.replies = [];
         }
 
         return commentDetail;

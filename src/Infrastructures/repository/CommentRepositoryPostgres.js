@@ -15,7 +15,11 @@ class CommentRepositoryPostgres extends CommentRepository {
     const id = `comment-${this._idGenerator()}`;
 
     const query = {
-      text: "INSERT INTO comments VALUES ($1, $2, $3, $4) RETURNING id, content, owner",
+      text: `
+        INSERT INTO comments (id, content, owner, thread)
+        VALUES ($1, $2, $3, $4)
+        RETURNING id, content, owner
+      `,
       values: [id, content, owner, thread],
     };
 
@@ -38,7 +42,7 @@ class CommentRepositoryPostgres extends CommentRepository {
 
   async verifyOwner({ commentId, owner }) {
     const query = {
-      text: "SELECT owner FROM comments WHERE id = $1",
+      text: "SELECT owner FROM comments WHERE id = $1 AND is_delete = false",
       values: [commentId],
     };
 
@@ -77,12 +81,15 @@ class CommentRepositoryPostgres extends CommentRepository {
               TO_CHAR(
                 date, 'YYYY-MM-DD"T"HH24:MI:SS"Z"'
               ) as date,
-              is_delete
+              is_delete,
+              CAST(COUNT(likes.id) AS INTEGER) AS "likeCount"
              FROM comments
              LEFT JOIN users
              ON comments.owner = users.id
-             WHERE thread = $1
-             ORDER BY date ASC`,
+             LEFT JOIN likes ON likes.comment = comments.id
+             WHERE comments.thread = $1
+             GROUP BY comments.id, users.username, comments.content, comments.date, comments.is_delete
+             ORDER BY comments.date ASC`,
       values: [threadId],
     };
 
