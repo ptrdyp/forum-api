@@ -8,24 +8,28 @@ describe("a comment detail entities", () => {
       username: "johndoe",
       date: "2021-08-08T07:22:33.555Z",
       content: "sebuah comment",
+      likeCount: 2,
     };
     const noUsernamePropPayload = {
       id: "comment-123",
       //   username: "johndoe",
       date: "2021-08-08T07:22:33.555Z",
       content: "sebuah comment",
+      likeCount: 2,
     };
     const noDatePropPayload = {
       id: "comment-123",
       username: "johndoe",
       //   date: "2021-08-08T07:22:33.555Z",
       content: "sebuah comment",
+      likeCount: 2,
     };
     const noContentPropPayload = {
       id: "comment-123",
       username: "johndoe",
       date: "2021-08-08T07:22:33.555Z",
       //   content: "sebuah comment",
+      likeCount: 2,
     };
 
     expect(() => new CommentDetail(emptyPayload)).toThrowError("COMMENT_DETAIL.NOT_CONTAIN_NEEDED_PROPERTY");
@@ -42,6 +46,7 @@ describe("a comment detail entities", () => {
       date: 2022,
       content: 123,
       replies: "ini reply",
+      likeCount: 2,
     };
 
     expect(() => new CommentDetail(payload)).toThrowError("COMMENT_DETAIL.NOT_MEET_DATA_TYPE_SPECIFICATION");
@@ -54,6 +59,7 @@ describe("a comment detail entities", () => {
       username: "johndoe",
       date: "2021-08-08T07:22:33.555Z",
       content: "sebuah comment",
+      likeCount: 2,
     };
 
     // Action
@@ -64,6 +70,7 @@ describe("a comment detail entities", () => {
     expect(commentDetail.username).toEqual("johndoe");
     expect(commentDetail.date).toEqual("2021-08-08T07:22:33.555Z");
     expect(commentDetail.content).toEqual("sebuah comment");
+    expect(commentDetail.likeCount).toEqual(2);
   });
 
   it("should return thread comment object correctly without replies", () => {
@@ -73,6 +80,7 @@ describe("a comment detail entities", () => {
       date: "2021-08-08T07:22:33.555Z",
       content: "sebuah comment",
       // replies is intentionally omitted
+      likeCount: 2,
     };
 
     const payloadWithNullReplies = {
@@ -81,6 +89,7 @@ describe("a comment detail entities", () => {
       date: "2021-08-08T07:22:33.555Z",
       content: "sebuah comment",
       replies: null,
+      likeCount: 2,
     };
 
     const payloadWithEmptyReplies = {
@@ -89,6 +98,7 @@ describe("a comment detail entities", () => {
       date: "2021-08-08T07:22:33.555Z",
       content: "sebuah comment",
       replies: [],
+      likeCount: 2,
     };
 
     const commentWithoutReplies = new CommentDetail(payloadWithEmptyReplies);
@@ -106,6 +116,7 @@ describe("a comment detail entities", () => {
       username: "johndoe",
       date: "2021-08-08T07:22:33.555Z",
       content: "sebuah comment",
+      likeCount: 2,
       replies: [
         {
           id: "reply-xNBtm9HPR-492AeiimpfN",

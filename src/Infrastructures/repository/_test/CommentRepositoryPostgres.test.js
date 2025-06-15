@@ -288,6 +288,7 @@ describe("CommentRepositoryPostgres", () => {
         date: expect.any(String),
         content: "firstt",
         is_delete: false,
+        likeCount: 0,
       });
       expect(threadComments[1]).toStrictEqual({
         id: "comment-233",
@@ -295,6 +296,7 @@ describe("CommentRepositoryPostgres", () => {
         date: expect.any(String),
         content: secComment.content,
         is_delete: false,
+        likeCount: 0,
       });
     });
   });
