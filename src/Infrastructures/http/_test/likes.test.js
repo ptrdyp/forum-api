@@ -74,7 +74,7 @@ describe("/threads/{threadId}/comments/{commentId}/likes endpoint", () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
+      
       const responseJson = JSON.parse(setLikesResponse.payload);
       expect(setLikesResponse.statusCode).toEqual(200);
       expect(responseJson.status).toEqual("success");
@@ -136,7 +136,7 @@ describe("/threads/{threadId}/comments/{commentId}/likes endpoint", () => {
 
       const setLikesResponse = await server.inject({
         method: "PUT",
-        url: `/threads/xxx/comments/${addedComment.id}/likes`,
+        url: `/threads/thread-not-exist/comments/${addedComment.id}/likes`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -188,22 +188,9 @@ describe("/threads/{threadId}/comments/{commentId}/likes endpoint", () => {
         data: { addedThread },
       } = JSON.parse(addThreadResponse.payload);
 
-      const addCommentResponse = await server.inject({
-        method: "POST",
-        url: `/threads/${addedThread.id}/comments`,
-        payload: { content: "saya berkomentar" },
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      const {
-        data: { addedComment },
-      } = JSON.parse(addCommentResponse.payload);
-
       const setLikesResponse = await server.inject({
         method: "PUT",
-        url: `/threads/${addedThread.id}/comments/xxx/likes`,
+        url: `/threads/${addedThread.id}/comments/comment-not-exist/likes`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

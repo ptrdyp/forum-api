@@ -15,7 +15,11 @@ class CommentRepositoryPostgres extends CommentRepository {
     const id = `comment-${this._idGenerator()}`;
 
     const query = {
-      text: "INSERT INTO comments VALUES ($1, $2, $3, $4) RETURNING id, content, owner",
+      text: `
+        INSERT INTO comments (id, content, owner, thread)
+        VALUES ($1, $2, $3, $4)
+        RETURNING id, content, owner
+      `,
       values: [id, content, owner, thread],
     };
 
@@ -38,7 +42,7 @@ class CommentRepositoryPostgres extends CommentRepository {
 
   async verifyOwner({ commentId, owner }) {
     const query = {
-      text: "SELECT owner FROM comments WHERE id = $1",
+      text: "SELECT owner FROM comments WHERE id = $1 AND is_delete = false",
       values: [commentId],
     };
 

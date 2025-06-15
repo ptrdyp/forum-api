@@ -1,15 +1,17 @@
 class SetCommentLikesUseCase {
-  constructor({ commentRepository, likeRepository }) {
+  constructor({ threadRepository, commentRepository, likeRepository }) {
+    this._threadRepository = threadRepository;
     this._commentRepository = commentRepository;
     this._likeRepository = likeRepository;
   }
 
   async execute(useCaseAuth, useCaseParam) {
     const { id } = useCaseAuth;
-    const { threadId, commentId } = useCaseParam;
 
-    await this._commentRepository.verifyAvailableComment(threadId, commentId);
-    await this._likeRepository.setCommentLikes(id, commentId);
+    await this._threadRepository.verifyAvailableThread(useCaseParam.threadId);
+    await this._commentRepository.verifyAvailableComment(useCaseParam.commentId);
+    await this._commentRepository.verifyCommentBelongsToThread(useCaseParam.commentId, useCaseParam.threadId);
+    await this._likeRepository.setCommentLikes(id, useCaseParam.commentId);
   }
 }
 

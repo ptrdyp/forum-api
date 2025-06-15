@@ -22,11 +22,6 @@ exports.up = (pgm) => {
       type: "VARCHAR(50)",
       notNull: true,
     },
-    is_liked: {
-      type: "BOOLEAN",
-      notNull: true,
-      default: true,
-    },
   });
 
   pgm.addConstraint("likes", "fk_likes.owner_users.id", "FOREIGN KEY(owner) REFERENCES users(id) ON DELETE CASCADE");
